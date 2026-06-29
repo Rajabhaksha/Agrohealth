@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroHealth - Agricultural Disease Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f1e8 0%, #e8f4e8 100%);
+            color: #2c3e1f;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #2d5016 0%, #3a6b1f 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: #f5f1e8;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "🌾";
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #f5f1e8;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #3a6b1f 0%, #2d5016 100%);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            color: #f5f1e8;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(45, 80, 22, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(45, 80, 22, 0.1);
+            border-left: 5px solid #8b9d6f;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(45, 80, 22, 0.15);
+        }
+
+        .card h3 {
+            color: #2d5016;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p {
+            color: #5a6b5b;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(45, 80, 22, 0.1);
+        }
+
+        .dashboard-item h2 {
+            color: #2d5016;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #8b9d6f;
+            padding-bottom: 0.75rem;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f9f7f4;
+            border-radius: 8px;
+            align-items: center;
+        }
+
+        .product-icon {
+            font-size: 2rem;
+        }
+
+        .product-info h4 {
+            color: #2d5016;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-info p {
+            color: #7a8a7b;
+            font-size: 0.9rem;
+        }
+
+        /* Disease Identifier */
+        .disease-checker {
+            background: linear-gradient(135deg, #f5f1e8 0%, #e8f4e8 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 2px dashed #8b9d6f;
+        }
+
+        .disease-checker h3 {
+            color: #2d5016;
+            margin-bottom: 1rem;
+        }
+
+        .symptom-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .symptom {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid #d4d9d0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            color: #2d5016;
+        }
+
+        .symptom:hover {
+            border-color: #8b9d6f;
+            background: #e8f4e8;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, #3a6b1f 0%, #2d5016 100%);
+            color: #f5f1e8;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: opacity 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Expert Corner */
+        .expert-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(45, 80, 22, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .expert-card {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f9f7f4;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .expert-avatar {
+            font-size: 2.5rem;
+        }
+
+        .expert-info {
+            flex: 1;
+        }
+
+        .expert-info h4 {
+            color: #2d5016;
+            margin-bottom: 0.25rem;
+        }
+
+        .expert-info p {
+            color: #7a8a7b;
+            font-size: 0.9rem;
+        }
+
+        /* Color Palette Reference */
+        .palette {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(45, 80, 22, 0.1);
+        }
+
+        .palette h3 {
+            color: #2d5016;
+            margin-bottom: 1rem;
+        }
+
+        .colors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .color-box {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .c1 { background: #2d5016; }
+        .c2 { background: #3a6b1f; }
+        .c3 { background: #8b9d6f; }
+        .c4 { background: #f5f1e8; color: #2d5016; }
+        .c5 { background: #e8f4e8; color: #2d5016; }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">AgroHealth</div>
+        <ul>
+            <li><a>Dashboard</a></li>
+            <li><a>Marketplace</a></li>
+            <li><a>Experts</a></li>
+            <li><a>Account</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🌾 AgroHealth</h1>
+            <p>Identify crop diseases • Buy solutions • Consult experts • Grow better</p>
+        </div>
+
+        <!-- Features -->
+        <div class="features">
+            <div class="card">
+                <h3><span class="card-icon">🔍</span>Disease Finder</h3>
+                <p>Match symptoms to identify crop diseases instantly</p>
+            </div>
+            <div class="card">
+                <h3><span class="card-icon">🛒</span>Smart Marketplace</h3>
+                <p>Buy fertilizers, pesticides, seeds recommended for your disease</p>
+            </div>
+            <div class="card">
+                <h3><span class="card-icon">👨‍🌾</span>Expert Advice</h3>
+                <p>Connect with agricultural experts for personalized guidance</p>
+            </div>
+            <div class="card">
+                <h3><span class="card-icon">📊</span>Track Crops</h3>
+                <p>Monitor crop health and treatment progress over time</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="dashboard">
+            <!-- Recommended Products -->
+            <div class="dashboard-item">
+                <h2>🛒 Recommended Products</h2>
+                <div class="product-item">
+                    <div class="product-icon">💊</div>
+                    <div class="product-info">
+                        <h4>Copper Fungicide 500ml</h4>
+                        <p>For Early Blight • ₹299</p>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">🌱</div>
+                    <div class="product-info">
+                        <h4>Disease-Resistant Seed Pack</h4>
+                        <p>Tomato • ₹150</p>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <div class="product-icon">🥗</div>
+                    <div class="product-info">
+                        <h4>Organic Fertilizer 5kg</h4>
+                        <p>Boost immunity • ₹399</p>
+                    </div>
+                </div>
+                <button class="btn">View All Products</button>
+            </div>
+
+            <!-- Disease Identifier -->
+            <div class="dashboard-item">
+                <h2>🔍 Disease Identifier</h2>
+                <p style="margin-bottom: 1rem; color: #5a6b5b;">Select symptoms you see on your plants:</p>
+                <div class="symptom-list">
+                    <div class="symptom">Brown Spots</div>
+                    <div class="symptom">Yellowing</div>
+                    <div class="symptom">Wilting</div>
+                    <div class="symptom">Leaf Curl</div>
+                </div>
+                <button class="btn">Diagnose</button>
+            </div>
+        </div>
+
+        <!-- Expert Corner -->
+        <div class="expert-section">
+            <h2 style="color: #2d5016; margin-bottom: 1rem;">👨‍🌾 Available Experts</h2>
+            <div class="expert-card">
+                <div class="expert-avatar">🧑‍🌾</div>
+                <div class="expert-info">
+                    <h4>Dr. Rajesh Kumar - Cotton Specialist</h4>
+                    <p>15+ years experience • Next available: Today 3 PM • ₹299/consultation</p>
+                </div>
+                <button class="btn">Consult</button>
+            </div>
+            <div class="expert-card">
+                <div class="expert-avatar">👩‍🌾</div>
+                <div class="expert-info">
+                    <h4>Priya Sharma - Vegetable Farmer</h4>
+                    <p>10+ years experience • Next available: Tomorrow 10 AM • ₹199/consultation</p>
+                </div>
+                <button class="btn">Consult</button>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="palette">
+            <h3>🎨 Design Aesthetic: Earthy Agricultural</h3>
+            <p style="margin-bottom: 1rem; color: #5a6b5b;">This design combines trust (dark green), nature (earth tones), and accessibility for farmers.</p>
+            <div class="colors">
+                <div class="color-box c1">Primary Green<br>#2d5016</div>
+                <div class="color-box c2">Accent Green<br>#3a6b1f</div>
+                <div class="color-box c3">Sage Green<br>#8b9d6f</div>
+                <div class="color-box c4">Cream<br>#f5f1e8</div>
+                <div class="color-box c5">Light Green<br>#e8f4e8</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
